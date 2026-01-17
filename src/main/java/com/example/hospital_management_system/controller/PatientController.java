@@ -2,8 +2,8 @@ package com.example.hospital_management_system.controller;
 
 import com.example.hospital_management_system.model.Patient;
 import com.example.hospital_management_system.service.PatientService;
+import jakarta.validation.Valid; // Ensure this import exists
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
@@ -22,12 +22,7 @@ public class PatientController {
     }
 
     @PostMapping
-    public Patient createPatient(@RequestBody Patient patient) {
+    public Patient createPatient(@Valid @RequestBody Patient patient) { // Added @Valid
         return patientService.savePatient(patient);
-    }
-
-    @DeleteMapping("/{id}")
-    public void deletePatient(@PathVariable Long id) {
-        patientService.deletePatient(id);
     }
 }
