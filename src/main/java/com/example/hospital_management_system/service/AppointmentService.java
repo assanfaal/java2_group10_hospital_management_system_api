@@ -18,7 +18,26 @@ public class AppointmentService {
         return appointmentRepository.findAll();
     }
 
+    public Appointment getAppointmentById(Long id) {
+        return appointmentRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Appointment not found with id: " + id));
+    }
+
     public Appointment saveAppointment(Appointment appointment) {
         return appointmentRepository.save(appointment);
+    }
+
+    public Appointment updateAppointment(Long id, Appointment details) {
+        Appointment appointment = getAppointmentById(id);
+        appointment.setAppointmentDate(details.getAppointmentDate());
+        appointment.setStatus(details.getStatus());
+        appointment.setPatient(details.getPatient());
+        appointment.setDoctor(details.getDoctor());
+        return appointmentRepository.save(appointment);
+    }
+
+    public void deleteAppointment(Long id) {
+        Appointment appointment = getAppointmentById(id);
+        appointmentRepository.delete(appointment);
     }
 }

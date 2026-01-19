@@ -7,38 +7,34 @@ import java.util.List;
 
 @Service
 public class DoctorService {
-
     private final DoctorRepository doctorRepository;
 
     public DoctorService(DoctorRepository doctorRepository) {
         this.doctorRepository = doctorRepository;
     }
 
-    public Doctor save(Doctor doctor) {
-        return doctorRepository.save(doctor);
-    }
-
-    public List<Doctor> findAll() {
+    public List<Doctor> getAllDoctors() {
         return doctorRepository.findAll();
     }
 
-    public Doctor findById(Long id) {
-        return doctorRepository.findById(id).orElse(null);
+    public Doctor getDoctorById(Long id) {
+        return doctorRepository.findById(id).orElseThrow(() -> new RuntimeException("Doctor not found"));
     }
 
-    public List<Doctor> findBySpecialization(String specialization) {
-        return doctorRepository.findBySpecialization(specialization);
+    public Doctor saveDoctor(Doctor doctor) {
+        return doctorRepository.save(doctor);
     }
 
-    public List<Doctor> findByNameContaining(String name) {
-        return doctorRepository.findByNameContaining(name);
+    public Doctor updateDoctor(Long id, Doctor details) {
+        Doctor doctor = getDoctorById(id);
+        doctor.setName(details.getName());
+        doctor.setSpecialization(details.getSpecialization());
+        doctor.setEmail(details.getEmail());
+        doctor.setDepartment(details.getDepartment());
+        return doctorRepository.save(doctor);
     }
 
-    public List<Doctor> findByDepartment(String department) {
-        return doctorRepository.findByDepartment(department);
-    }
-
-    public void deleteById(Long id) {
-        doctorRepository.deleteById(id);
+    public void deleteDoctor(Long id) {
+        doctorRepository.delete(getDoctorById(id));
     }
 }
