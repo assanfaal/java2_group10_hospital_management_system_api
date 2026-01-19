@@ -4,7 +4,8 @@ spring:
   datasource:
     url: jdbc:mysql://localhost:3306/hospital_db?createDatabaseIfNotExist=true
     username: root
-    password: hospital1234
+    password: Gambia2020
+#    password: hospital1234
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     hibernate:
